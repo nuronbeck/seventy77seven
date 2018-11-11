@@ -1,0 +1,409 @@
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>GAME BY ISMOILOV</title>
+	<link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">
+	<style>
+		body, div, p
+		{
+			margin: 0;
+			padding: 0;
+		}
+		body{background-image: url('card_bg.jpg'); background-size: cover;}
+		.container_prel
+		{
+			width: 34%;
+			margin: 0 auto;
+			padding-top: 180px;
+			padding-left: 15%;
+		}
+		.game_zone
+		{
+			background-color: rgba(0,0,0,0.5);
+			height: 545px;
+			width: 90%;
+			margin: 0 auto;
+			padding: 15px;
+			text-align: center;
+		}
+		.game_zone input:hover
+		{
+			transition: .2s ease-in-out;
+			box-shadow: 1px 1px 20px rgba(200,150,0,1);
+		}
+		.btn1_newgame
+		{
+			transition: .2s;
+			background-color: #00cc00;
+		}
+		.btn1_newplayer
+		{
+			transition: .2s;
+			background-color: #bb0000;
+		}
+
+	</style>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+</head>
+<body>
+	
+	<div id="preloader_game" style="width: 100%; background-color: #077; height: 2000px;" class="preloader">
+		<div class="container_prel">
+			<svg width="200px"  height="200px"  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" class="lds-pacman" style="background: none;"><g ng-attr-style="display:{{config.showBean}}" style="display:block"><circle cx="37.6571" cy="50" r="4" ng-attr-fill="{{config.c2}}" fill="#ed5e16"><animate attributeName="cx" calcMode="linear" values="95;35" keyTimes="0;1" dur="0.7" begin="-0.469s" repeatCount="indefinite"></animate><animate attributeName="fill-opacity" calcMode="linear" values="0;1;1" keyTimes="0;0.2;1" dur="0.7" begin="-0.469s" repeatCount="indefinite"></animate></circle><circle cx="58.0571" cy="50" r="4" ng-attr-fill="{{config.c2}}" fill="#ed5e16"><animate attributeName="cx" calcMode="linear" values="95;35" keyTimes="0;1" dur="0.7" begin="-0.23099999999999998s" repeatCount="indefinite"></animate><animate attributeName="fill-opacity" calcMode="linear" values="0;1;1" keyTimes="0;0.2;1" dur="0.7" begin="-0.23099999999999998s" repeatCount="indefinite"></animate></circle><circle cx="77.8571" cy="50" r="4" ng-attr-fill="{{config.c2}}" fill="#ed5e16"><animate attributeName="cx" calcMode="linear" values="95;35" keyTimes="0;1" dur="0.7" begin="0s" repeatCount="indefinite"></animate><animate attributeName="fill-opacity" calcMode="linear" values="0;1;1" keyTimes="0;0.2;1" dur="0.7" begin="0s" repeatCount="indefinite"></animate></circle></g><g ng-attr-transform="translate({{config.showBeanOffset}} 0)" transform="translate(-15 0)"><path d="M50 50L20 50A30 30 0 0 0 80 50Z" ng-attr-fill="{{config.c1}}" fill="#fcf609" transform="rotate(25.7143 50 50)"><animateTransform attributeName="transform" type="rotate" calcMode="linear" values="0 50 50;45 50 50;0 50 50" keyTimes="0;0.5;1" dur="0.7s" begin="0s" repeatCount="indefinite"></animateTransform></path><path d="M50 50L20 50A30 30 0 0 1 80 50Z" ng-attr-fill="{{config.c1}}" fill="#fcf609" transform="rotate(-25.7143 50 50)"><animateTransform attributeName="transform" type="rotate" calcMode="linear" values="0 50 50;-45 50 50;0 50 50" keyTimes="0;0.5;1" dur="0.7s" begin="0s" repeatCount="indefinite"></animateTransform></path></g></svg>
+		</div>	
+	</div>
+	
+
+	<h1 style="text-align: center; color: #fff; padding-top: 15px; font-family: 'Lobster', cursive; font-weight: normal; ">Добро пожаловать в карточную игру "ЯБЛОН"!</h1>
+	
+	
+
+
+	<div class="game_zone">
+		<div id="gamer_data">
+			<h2 style="color: #fff;">Введите ваше имя:</h2>
+			<input id="gamer_name_data" type="text" style="background-color: #eee;" class="btn1_newgame">
+			<br><br>
+			<input id="save_gamer_data" class="btn1_newgame" style="color: #000; border: none; padding: 15px; width: 200px; background-color: #cc0; " type="button" value="Сохранить">
+		</div>
+	<br>
+
+		<div id="begin_game">
+			<div style="width: 340px; height: 280px; -webkit-background-size: cover; background-size: cover; background: url('img/splash_img.jpg'); margin: 0 auto;">
+			</div>
+			<br>
+			<input id="start_new_game" class="btn1_newgame" style="color: #fff; border: none; padding: 15px; width: 200px; " type="button" value="Начать игру">
+			<br>
+			<br>
+			<input id="add_game_player" class="btn1_newplayer" style="color: #fff; border: none; padding: 15px; width: 200px; " type="button" value="Добавить игрока">
+		</div>
+		<div style="height: 100px; padding: 15px;" id="gamers"></div>
+		
+		
+		<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+		<div id="bankomet">
+			<h2 style="color: #fff;">Банкомет >> <input id="share_cards" class="btn1_newgame" style="color: #fff; border: none; padding: 15px; width: 200px; background-color: #ac00ac;" type="button" value="Раздать карты"></h2>
+		</div>
+
+	</div>
+
+	<script>
+		$(document).ready(function()
+		{
+			var preloader = $('#preloader_game');
+			setTimeout(function(){
+				preloader.css('display', 'none');
+			}, 400);
+
+		});
+
+		$(window).on('load', function ()
+		{	
+			$('#begin_game').hide();
+			$('#bankomet').hide();
+			$('body').css('overflow-y', 'hidden');
+			var preloader = $('#preloader_game');
+			preloader.delay(500).fadeOut('slow');
+			setTimeout(function()
+				{
+					$('body').css('overflow-y', 'auto');
+				}, 	500);			
+		});
+
+		$('#save_gamer_data').bind("click", function()
+		{
+			var gamer_name = $('#gamer_name_data').val();
+			if (gamer_name != "" && gamer_name != null)
+			{
+				$('#gamers').append("<span style=\"color: #ff0;\">GAMER STATUS</span><div class=\"gmr\" id=\"gamer1\" style=\"margin: 5px; display: inline-block; width: 100px; background-color: #ee2020; padding: 10px; font-weight: bold; border-radius: 3px;\">"+gamer_name+"<br>Баланс: <span>800</span></div><br><br><hr style=\"border: 1px solid #fff;\">");
+				$('#gamer_data').hide();
+				$('#begin_game').show();
+			}
+			else
+			{
+				alert("ВВЕДИТЕ ВАШЕ ИМЯ!");
+			}
+		});
+
+		$('#start_new_game').bind("click", function()
+		{
+			$('#begin_game').hide();
+			$('#bankomet').show();
+		});
+
+		var only_first_deal = 0;
+		var suits = ['Черв', 'Пик', 'Крест', 'Буб'];
+		var cards = [2, 3, 4, 5, 6, 7, 8, 9, 10, 'Валет', 'Дама', 'Король', 'Туз'];
+		var dealed_cards = [];
+
+		$('#share_cards').bind('click', function()
+		{
+			if ($('#share_cards').val() == "Новая игра")
+			{
+				location.reload();
+			}
+			if ($('#share_cards').val() == "Вывести результат")
+			{
+				$('.gmr').each(function()
+				{
+					var card1 = $(this).nextAll('.cards_block').slice(0, 1).html();
+					var card2 = $(this).nextAll('.cards_block').slice(1, 2).html();
+					var card3 = $(this).nextAll('.cards_block').slice(2, 3).html();
+
+					var brExp = /<br\s*\/?>/i;
+    				var card1_lines = card1.split(brExp);
+    				var card2_lines = card2.split(brExp);
+    				var card3_lines = card3.split(brExp);
+    				//alert(card1_lines[0]);
+
+    				if (card1_lines[0] == 'Валет'){card1_lines[0] = 11;}
+    				if (card1_lines[0] == 'Дама'){card1_lines[0] = 12;}
+    				if (card1_lines[0] == 'Король'){card1_lines[0] = 13;}
+    				if (card1_lines[0] == 'Туз'){card1_lines[0] = 14;}
+
+    				if (card2_lines[0] == 'Валет'){card2_lines[0] = 11;}
+    				if (card2_lines[0] == 'Дама'){card2_lines[0] = 12;}
+    				if (card2_lines[0] == 'Король'){card2_lines[0] = 13;}
+    				if (card2_lines[0] == 'Туз'){card2_lines[0] = 14;}
+
+    				if (card3_lines[0] == 'Валет'){card3_lines[0] = 11;}
+    				if (card3_lines[0] == 'Дама'){card3_lines[0] = 12;}
+    				if (card3_lines[0] == 'Король'){card3_lines[0] = 13;}
+    				if (card3_lines[0] == 'Туз'){card3_lines[0] = 14;}
+
+    				//Result
+    				
+    				if (card1_lines[0] < card2_lines[0] && card2_lines[0] < card3_lines[0])
+    				{
+    					
+    					var str = $(this).prev('span').text();
+    					var win_summ = str.split(':');
+    					var balance = $(this).children('span').text();
+    					$(this).children('span').text(parseInt(balance)+(2*parseInt(win_summ[1])));
+
+    					$(this).prev('span').text('Выиграна');
+    					$(this).prev('span').css('color', '#10ff00');
+
+    				}
+    				else
+    				{
+    					$(this).prev('span').text('Проиграна');
+    					$(this).prev('span').css('color', '#f2101f');
+    				}
+
+    			
+				});
+
+				setTimeout(function()
+				{
+					$('#share_cards').css('background-color', '#000');
+					$('#share_cards').css('color', '#0f0');
+					$('#share_cards').val("Новая игра");
+				}, 1000);
+			}
+			else
+			{
+
+			if (only_first_deal == 0)
+			{
+				for (var i = 1; i <= $('#gamers div').length; i++)
+				{
+					for (var j = 0; j < 2; j++)
+					{
+						var random_suit = suits[Math.floor(Math.random()*suits.length)];
+						var random_card = cards[Math.floor(Math.random()*cards.length)];
+
+						var check_card = random_card+random_suit+"";
+
+						if ($.inArray(check_card, dealed_cards) == -1)
+						{
+							$('#gamer'+i).after("<div class=\"cards_block\" style=\"margin: 5px; display: none; width: 70px; height: 80px;background-color: #fff; padding: 10px 2px; font-weight: bold; border-radius: 3px; color: black; box-sizing: border-box;\">"+random_card+"<br>"+random_suit+"</div>");	
+
+							$('.cards_block').slideDown(function()
+							{
+								$('.cards_block').css('display', 'inline-block');
+							});
+
+							dealed_cards.push(random_card+random_suit);
+							
+						}
+						else
+						{
+							var random_suit = suits[Math.floor(Math.random()*suits.length)];
+							var random_card = cards[Math.floor(Math.random()*cards.length)];
+							var check_card = random_card+random_suit+"";
+
+							if ($.inArray(check_card, dealed_cards) == -1)
+							{
+								$('#gamer'+i).after("<div class=\"cards_block\" style=\"margin: 5px; display: none; width: 70px; height: 80px;background-color: #fff; padding: 10px 2px; font-weight: bold; border-radius: 3px; color: black; box-sizing: border-box;\">"+random_card+"<br>"+random_suit+"</div>");	
+
+								$('.cards_block').slideDown(function()
+								{
+									$('.cards_block').css('display', 'inline-block');
+								});
+
+								dealed_cards.push(random_card+random_suit);
+								
+							}
+						}
+
+					}
+
+				}
+
+				setTimeout(function()
+				{
+					$('#share_cards').css('background-color', '#0f0');
+					$('#share_cards').val("Решить ставку");
+				}, 1000);
+				only_first_deal = only_first_deal+1;
+			}
+			else
+			{
+				if ($('#share_cards').val() == "Решить ставку") 
+				{
+					var result = window.confirm('Будете делать ставку ?');
+				}
+				
+				if (result == true)
+				{
+					var summ_stavka = prompt('Введите сумму ставки?', "");
+					if (summ_stavka < $('#gamer1 span').text())
+					{
+						var gamer1_cash = $('#gamer1 span').text();
+						$('#gamer1 span').text(gamer1_cash-summ_stavka);
+						$('#gamer1').prev('span').text("СТАВКА:"+summ_stavka);
+
+
+							$('.gmr').each(function()
+							{
+								if ($(this).prev('span').text() == "GAMER STATUS")
+								{
+									var bet_rnd = Boolean(Math.floor(Math.random() * 2));
+									//alert(bet_rnd);
+
+									if (bet_rnd == true)
+									{
+										var gamer_bet_summ = $(this).children('span').text();
+										//alert(gamer_bet_summ);
+										var rnd = Math.floor(Math.random()*gamer_bet_summ);
+										$(this).children('span').text(gamer_bet_summ-rnd);
+										$(this).prev('span').text("СТАВКА:"+rnd);
+									}
+									else
+									{
+										$(this).prev('span').text("ПАСС!");
+										$(this).prev('span').css('color', '#ff0000');
+									}
+									
+								}
+
+							});
+						
+					}
+					alert("Сейчас всем игрокам будет раздана третья карта (Промежуточная карта)!");
+					setTimeout(function()
+					{
+						setTimeout(function()
+						{
+							$('.gmr').each(function()
+							{
+								if ($(this).prev('span').text().indexOf('ПАСС!') > -1 && $(this).prev('span').text().indexOf('СТАВКА') == -1)
+								{
+										$(this).prev('span').remove();
+										$(this).nextUntil('hr').remove();
+										$(this).next('hr').remove();
+										$(this).remove();
+
+										for (var i = 1; i <= $('#gamers div').length; i++)
+										{
+											for (var j = 0; j < 1; j++)
+											{
+												var random_suit = suits[Math.floor(Math.random()*suits.length)];
+												var random_card = cards[Math.floor(Math.random()*cards.length)];
+
+												var check_card = random_card+random_suit+"";
+
+												if ($.inArray(check_card, dealed_cards) == -1)
+												{
+													$('#gamer'+i).next().after("<div class=\"cards_block\" style=\"margin: 5px; display: none; width: 70px; height: 80px;background-color: #0ff; padding: 10px 2px; font-weight: bold; border-radius: 3px; color: black; box-sizing: border-box;\">"+random_card+"<br>"+random_suit+"</div>");	
+
+													$('.cards_block').slideDown(function()
+													{
+														$('.cards_block').css('display', 'inline-block');
+													});
+
+													dealed_cards.push(random_card+random_suit);
+													
+												}
+												else
+												{
+													var random_suit = suits[Math.floor(Math.random()*suits.length)];
+													var random_card = cards[Math.floor(Math.random()*cards.length)];
+
+													var check_card = random_card+random_suit+"";
+													if ($.inArray(check_card, dealed_cards) == -1)
+													{
+														$('#gamer'+i).next().after("<div class=\"cards_block\" style=\"margin: 5px; display: none; width: 70px; height: 80px;background-color: #0ff; padding: 10px 2px; font-weight: bold; border-radius: 3px; color: black; box-sizing: border-box;\">"+random_card+"<br>"+random_suit+"</div>");	
+
+														$('.cards_block').slideDown(function()
+														{
+															$('.cards_block').css('display', 'inline-block');
+														});
+
+														dealed_cards.push(random_card+random_suit);
+														
+													}
+												}
+
+											}
+
+										}
+								}
+								else
+								{}
+							
+							setTimeout(function()
+							{
+								$('#share_cards').val("Вывести результат");
+								$('#share_cards').css('background-color', '#ee0000');
+							}, 1000);
+
+							});
+						}, 2000);
+						
+					}, 1200);
+				}
+			}
+			}
+
+			
+		});
+
+		$('#add_game_player').bind("click", function()
+		{
+			if ($('#gamers').children('div').length  == 4)
+			{
+				alert("Слишком много игроков!");
+			}
+			else
+			{
+				if ($('#gamers').children('div').length == 0)
+				{
+					var random_balance = Math.floor(Math.random()*1000);
+					$('#gamers').append("<span style=\"color: #ff0;\"></span><div class=\"gmr\" id=\"gamer1\" style=\"margin: 5px; display: inline-block; width: 100px; background-color: #8888ff; padding: 10px; font-weight: bold; border-radius: 3px;\">Игрок 1<br>Баланс: <span>"+random_balance+"</span><br></div><hr style=\"border: 1px solid #fff;\">");
+				}
+				else
+				{
+					var random_balance = Math.floor(Math.random()*1000);
+					var newgamer = $('#gamers').children('div').last().attr('id');
+					var id_split = newgamer.split("gamer");
+					var new_id = parseInt(id_split[1])+1;
+					$('#gamers').append("<span style=\"color: #ff0;\">GAMER STATUS</span><div class=\"gmr\" id=\"gamer"+new_id+"\" style=\"margin: 5px; display: inline-block; width: 100px; background-color: #8888ff; padding: 10px; font-weight: bold; border-radius: 3px;\">Игрок "+new_id+"<br>Баланс: <span>"+random_balance+"</span><br></div><br><br><hr style=\"border: 1px solid #fff;\">");
+				}
+			}
+		});
+	</script>
+
+</body>
+</html>
